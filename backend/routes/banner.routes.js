@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const c = require('../controllers/banner.controller');
+const { protect, admin } = require('../middleware/auth.middleware');
+const { upload } = require('../config/cloudinary');
+router.get('/', c.getBanners);
+router.post('/', protect, admin, upload.single('image'), c.createBanner);
+router.put('/:id', protect, admin, c.updateBanner);
+router.delete('/:id', protect, admin, c.deleteBanner);
+router.get('/flash-sale', c.getActiveFlashSale);
+router.post('/flash-sale', protect, admin, c.createFlashSale);
+module.exports = router;

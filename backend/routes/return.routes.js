@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const c = require('../controllers/return.controller');
+const { protect, admin } = require('../middleware/auth.middleware');
+const { upload } = require('../config/cloudinary');
+router.post('/', protect, upload.array('images', 3), c.createReturn);
+router.get('/my-returns', protect, c.getMyReturns);
+router.get('/', protect, admin, c.getAllReturns);
+router.put('/:id/status', protect, admin, c.updateReturnStatus);
+module.exports = router;
